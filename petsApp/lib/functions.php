@@ -1,18 +1,26 @@
 <?php
 
-// Function for returning all pets from the pets table
 // Contains PDO obj that has config data to connect to DB
+// Returns the data for our queries
+function get_connection()
+{
+    $config = require 'lib/config.php';
+
+    return new PDO(
+        $config['database_dsn'],
+        $config['database_user'],
+        $config['database_pass']
+    );
+}
+
+// Function for returning all pets from the pets table
 // Queries and limits the number of animals displayed
 // fetchAll() returns a numeric array from a result set (the SQL query below)
 function get_pets($limit = null)
 {
     $config = require 'lib/config.php';
 
-    $pdo = new PDO(
-        $config['database_dsn'],
-        $config['database_user'],
-        $config['database_pass']
-    );
+    $pdo = get_connection();
     // TODO - PREVENT SQL INJECTION
     $query = 'SELECT * FROM pets';
     if ($limit) {
@@ -26,9 +34,13 @@ function get_pets($limit = null)
 
 function get_pet($id)
 {
+    $pdo = get_connection();
     // TODO - SECURITY RISK
-    // Current code does not have access to the DB
     $query = 'SELECT * FROM pets WHERE id = '.$id;
+    $result = $pdo->query($query);
+    $pet = $result->fetch();
+
+    return $pet;
 }
 // Function that saves newly added pets
 function save_pets($petsToSave)

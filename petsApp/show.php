@@ -2,6 +2,7 @@
 require 'lib/functions.php';
 require 'layout/header.php';
 
+// Get the ID of the selected pet from index.
 $id = $_GET['id'];
 $pet = get_pet($id);
 ?>
