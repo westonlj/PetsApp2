@@ -21,24 +21,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $weight = '';
     }
 
-    if (isset($_POST['bio'])) {
-        $bio = $_POST['bio'];
+    if (isset($_POST['age'])) {
+        $age = $_POST['age'];
     } else {
-        $bio = '';
+        $age = 'Unknown';
     }
 
-    $pets = get_pets();
+    if (isset($_POST['bio'])) {
+        $information = $_POST['bio'];
+    } else {
+        $information = '';
+    }
+
     $newPet = array(
         'name' => $name,
         'breed' => $breed,
         'weight' => $weight,
-        'bio' => $bio,
+        'information' => $information,
+        'age' => $age,
         'image' => '',
-        'age' => '',
+        
     );
-    $pets[] = $newPet;
 
-    save_pets($pets);
+    save_pet($newPet);
 
     header('Location: /');
     die;
@@ -64,6 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label for="pet-weight" class="control-label">Weight (lbs)</label>
                     <input type="number" name="weight" id="pet-weight" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="pet-age" class="control-label">Age (Years)</label>
+                    <input type="number" name="age" id="pet-age" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label for="pet-bio" class="control-label">Pet Bio</label>

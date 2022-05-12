@@ -58,9 +58,25 @@ function get_pet($id)
     return $statement->fetch();
 }
 // Function that saves newly added pets
-function save_pets($petsToSave)
+function save_pet($petToSave)
 {
-    $json = json_encode($petsToSave, JSON_PRETTY_PRINT);
-    // TODO - Create a new entry to the pet DB not the pets file.
-    file_put_contents('data/pets.json', $json);
+    // $json = json_encode($petToSave, JSON_PRETTY_PRINT);
+    // // TODO - Create a new entry to the pet DB not the pets file.
+    // // file_put_contents('data/pets.json', $json);
+    // var_dump($json);
+
+    $pdo = get_connection();
+    $query = 
+        'INSERT INTO pets(name, breed, weight, information, image, age)
+        VALUES(:nameVal, :breedVal, :weightVal, :infoVal, :imageVal, :ageVal)';
+    $statement = $pdo->prepare($query);
+    $statement->bindParam('nameVal', $petToSave['name']);
+    $statement->bindParam('breedVal', $petToSave['breed']);
+    $statement->bindParam('weightVal', $petToSave['weight']);
+    $statement->bindParam('infoVal', $petToSave['information']);
+    $statement->bindParam('imageVal', $petToSave['image']);
+    $statement->bindParam('ageVal', $petToSave['age']);
+
+    $statement->execute();
+
 }
