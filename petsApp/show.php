@@ -3,8 +3,19 @@ require 'lib/functions.php';
 require 'layout/header.php';
 
 // Get the ID of the selected pet from index.
+// delete button throughs an error that we are missing 'id' 
 $id = $_GET['id'];
 $pet = get_pet($id);
+
+// Similar to the pets_new file we check if the button has been pressed and then run the needed functions
+// aim is to pass id to a delete pet function
+if(isset($_POST['deletePet'])) {
+    //echo $id;
+    echo 'ATTEMPTING TO DELETE';
+    die;
+
+    // TODO -> redirect to home page/ display a message "DELETED"
+}
 ?>
 
 <h1>Meet <?php echo $pet['name']; ?></h1>
@@ -18,7 +29,7 @@ $pet = get_pet($id);
             <p>
                 <?php echo $pet['information']; ?>
             </p>
-
+        <form action="/show.php?id=<?php echo $id; ?>" method="GET">
             <table class="table">
                 <tbody>
                     <tr>
@@ -35,6 +46,13 @@ $pet = get_pet($id);
                     </tr>
                 </tbody>
             </table>
+
+            <!-- EDIT BUTTON NEXT TO DELETE BUTTON -->
+            <button type="submit" class="btn btn-danger" name="deletePet" value="<?php $id?>">
+                <span class="glyphicon glyphicon-remove"></span>
+                    DELETE THIS FRIEND
+            </button>
+        </form>
         </div>
     </div>
 </div>

@@ -80,3 +80,17 @@ function save_pet($petToSave)
     $statement->execute();
 
 }
+
+// TODO - DELETE_PET
+// Function to remove a pet from the pet table.
+function delete_pet($petToDelete)
+{
+    // DELETE FROM `pet_data`.`pets` WHERE `id` = 8;
+    $pdo = get_connection();
+    $query = 'DELETE FROM pets WHERE id = :petToDelete';
+
+    $statement = $pdo->prepare($query);
+    $statement->bindParam('petToDelete', $petToDelete);
+
+    // execute() the statement
+}
