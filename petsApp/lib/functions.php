@@ -1,10 +1,10 @@
 <?php
 
-// The following string contains our locally host db 'pet_data' hosted on localhost
-// 'root' and 'null' are where our username and password to the DB would go. 
-// accessing all pets from the pets table
-// fetch all returns a numeric array from a result set (the SQL query below)
-function get_pets()
+// Function for returning all pets from the pets table
+// Contains PDO obj that has config data to connect to DB
+// Queries and limits the number of animals displayed
+// fetchAll() returns a numeric array from a result set (the SQL query below)
+function get_pets($limit = null)
 {
     $config = require 'lib/config.php';
 
@@ -13,14 +13,21 @@ function get_pets()
         $config['database_user'],
         $config['database_pass']
     );
-    $result = $pdo->query('SELECT * FROM pets'); 
+    // TODO - PREVENT SQL INJECTION
+    $query = 'SELECT * FROM pets';
+    if ($limit) {
+        $query = $query.' LIMIT '. $limit;
+    }
+    $result = $pdo->query($query); 
     $pets = $result->fetchAll(); 
 
     return $pets;
 }
 
+// Function that saves newly added pets
 function save_pets($petsToSave)
 {
     $json = json_encode($petsToSave, JSON_PRETTY_PRINT);
+    // TODO - Create a new entry to the pet DB not the pets file.
     file_put_contents('data/pets.json', $json);
 }
