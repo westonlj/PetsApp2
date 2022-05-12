@@ -6,7 +6,13 @@
 // fetch all returns a numeric array from a result set (the SQL query below)
 function get_pets()
 {
-    $pdo = new PDO('mysql:dbname=pet_data;host=localhost', 'root', null);
+    $config = require 'lib/config.php';
+
+    $pdo = new PDO(
+        $config['database_dsn'],
+        $config['database_user'],
+        $config['database_pass']
+    );
     $result = $pdo->query('SELECT * FROM pets'); 
     $pets = $result->fetchAll(); 
 
