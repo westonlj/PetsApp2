@@ -1,7 +1,14 @@
 <?php
+    // The following string contains our locally host db 'pet_data' hosted on localhost
+    // accessing all pets from the pets table
+    // fetch all returns a numeric array from a result set (the SQL query below)
+    $pdo = new PDO('mysql:dbname=pet_data;host=localhost', 'root', null);
+    $result = $pdo->query('SELECT * FROM pets'); 
+    $pets = $result->fetchAll(); 
+
     require 'lib/functions.php';
 
-    $pets = get_pets();
+    // $pets = get_pets();
 
     $pets = array_reverse($pets);
 
