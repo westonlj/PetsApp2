@@ -24,6 +24,12 @@ function get_pets($limit = null)
     return $pets;
 }
 
+function get_pet($id)
+{
+    // TODO - SECURITY RISK
+    // Current code does not have access to the DB
+    $query = 'SELECT * FROM pets WHERE id = '.$id;
+}
 // Function that saves newly added pets
 function save_pets($petsToSave)
 {

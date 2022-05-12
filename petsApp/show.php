@@ -1,3 +1,11 @@
+<?php 
+require 'lib/functions.php';
+require 'layout/header.php';
+
+$id = $_GET['id'];
+$pet = get_pet($id);
+?>
+
 <h1>Meet <?php echo $pet['name']; ?></h1>
 
 <div class="container">
@@ -7,25 +15,27 @@
         </div>
         <div class="col-xs-6">
             <p>
-                <?php echo $pet['bio']; ?>
+                <?php echo $pet['information']; ?>
             </p>
 
             <table class="table">
                 <tbody>
                     <tr>
                         <th>Breed</th>
-                        <td></td>
+                        <td><?php echo $pet['breed']; ?></td>
                     </tr>
                     <tr>
                         <th>Age</th>
-                        <td></td>
+                        <td><?php echo $pet['age']; ?></td>
                     </tr>
                     <tr>
                         <th>Weight</th>
-                        <td></td>
+                        <td><?php echo $pet['weight']; ?></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<?php require 'layout/footer.php'; ?>
