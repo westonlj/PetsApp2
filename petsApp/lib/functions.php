@@ -6,11 +6,15 @@ function get_connection()
 {
     $config = require 'lib/config.php';
 
-    return new PDO(
+    $pdo = new PDO(
         $config['database_dsn'],
         $config['database_user'],
         $config['database_pass']
     );
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    return $pdo;
 }
 
 // Function for returning all pets from the pets table
@@ -21,26 +25,37 @@ function get_pets($limit = null)
     $config = require 'lib/config.php';
 
     $pdo = get_connection();
-    // TODO - PREVENT SQL INJECTION
+    // Prepared statements using placeholders like :resultLimit
     $query = 'SELECT * FROM pets';
-    if ($limit) {
-        $query = $query.' LIMIT '. $limit;
+    // Our default param is set to null, which our queries hates
+    if ($limit) { 
+        $query = $query .' LIMIT :resultLimit';
     }
-    $result = $pdo->query($query); 
-    $pets = $result->fetchAll(); 
+    // Will run even if there is limit is NULL, but will not make our LIMIT query null
+    $statement = $pdo->prepare($query);
 
-    return $pets;
+    if ($limit) { 
+        // replaces our placeholder with limit THAT IS AN INT
+        $statement->bindParam('resultLimit', $limit, PDO::PARAM_INT); 
+    }
+    $statement->execute(); 
+
+    return $statement->fetchAll();
 }
 
+// Function to return one specific pet
 function get_pet($id)
 {
     $pdo = get_connection();
-    // TODO - SECURITY RISK
-    $query = 'SELECT * FROM pets WHERE id = '.$id;
-    $result = $pdo->query($query);
-    $pet = $result->fetch();
-
-    return $pet;
+    // TODO - Prevent SQL Injection with Prepared Statements
+    $query = 'SELECT * FROM pets WHERE id = :idVal';
+    // prepare() creates and returns a PDO statement object
+    $statement = $pdo->prepare($query);
+    // bindParam replaces idVal with the value of $id and execute it
+    $statement->bindParam('idVal', $id);
+    $statement->execute();
+    // we are still calling fetch (to get our data) on the pdo object when we return it
+    return $statement->fetch();
 }
 // Function that saves newly added pets
 function save_pets($petsToSave)
