@@ -51,7 +51,7 @@
                     </blockquote>
 
                     <p>
-                        <?php echo $cutePet['bio']; ?>
+                        <?php echo $cutePet['information']; ?>
                     </p>
                 </div>
             <?php } ?>
