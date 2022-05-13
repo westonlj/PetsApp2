@@ -1,18 +1,20 @@
 <?php
 require 'lib/functions.php';
 
+$errors = [];
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    if (isset($_POST['name'])) {
+    if (!empty($_POST['name'])) {
         $name = $_POST['name'];
     } else {
-        $name = 'A dog without a name';
+        $errors[] = 'This pet must have a name!';
     }
 
-    if (isset($_POST['breed'])) {
+    if (!empty($_POST['breed'])) {
         $breed = $_POST['breed'];
     } else {
-        $breed = '';
+        $errors[] = 'This dog needs a breed!';
     }
 
     if (isset($_POST['weight'])) {
@@ -32,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $information = '';
     }
-
+    // Cannot find ID/ no ID found
     if (isset($_POST['petId'])) {
         $id = $_POST['petId'];
         if (!get_pet($id)) {
@@ -44,24 +46,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // or could catch and die the error
     }
 
-    $pet = [
-        'name' => $name,
-        'breed' => $breed,
-        'weight' => $weight,
-        'information' => $information,
-        'age' => $age,
-        'image' => '',
-        'id' => $id
-    ];
-
-    update_pet($pet);
+    if (count($errors) == 0) {
+        $pet = [
+            'name' => $name,
+            'breed' => $breed,
+            'weight' => $weight,
+            'information' => $information,
+            'age' => $age,
+            'image' => '',
+            'id' => $id
+        ];
     
-    header('Location: /show.php?id='.$pet['id']);
-    die;
+        update_pet($pet);
+        header('Location: /show.php?id='.$pet['id']);
+        die;
+    }
+
+}
+// Error handling causes us to reload the page and lose our ID for the pet
+// The below is just so we always have a pet ID.
+// If the user deletes the pets name and attempts to submit all changes should be reverted
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['petId'];
+    $pet = get_pet($id);
 }
 
-$id = $_GET['id'];
-$pet = get_pet($id);
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $id = $_GET['id'];
+    $pet = get_pet($id);
+}
+
 ?>
 
 <?php require 'layout/header.php'; ?>
@@ -70,7 +85,16 @@ $pet = get_pet($id);
     <div class="row">
         <div class="col-xs-6">
             <h1>Edit your Pet! Squirrel!</h1>
-
+            <?php if (count($errors) > 0) {?>
+                <div class="alert alert-danger" role="alert">
+                    <h3>ERROR - Please correct the following...</h3>
+                    <ul>
+                        <?php foreach ($errors as $error) { ?>                    
+                            <li><?php echo $error . "<br />"; ?></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            <?php } ?>
             <form action="/pets_edit.php" method="POST">
                 <!-- could put the id in an input inside of a div tag with a style saying it's not visible -->
                 <div class="form-group">

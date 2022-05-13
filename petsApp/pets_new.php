@@ -8,15 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['name'])) {
         $name = $_POST['name'];
     } else {
-        $errors[] = 'This dog needs a name!';
-        // $name = 'A dog without a name';
+        $errors[] = 'This pet needs a name!';
     }
 
     if (!empty($_POST['breed'])) {
         $breed = $_POST['breed'];
     } else {
-        $errors[] = 'This dog needs a breed!';
-        // $breed = '';
+        $errors[] = 'This pet needs a breed!';
     }
 
     if (isset($_POST['weight'])) {
@@ -54,8 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die;
     }
     // We do have errors
-    
-    
+
 }
 ?>
 
@@ -66,12 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="col-xs-6">
             <h1>Add your Pet! Squirrel!</h1>
             <?php if (count($errors) > 0) {?>
-                <h3>ERROR - Please correct the following...</h3>
-                <ul>
-                    <?php foreach ($errors as $error) { ?>                    
-                        <li><?php echo $error . "<br />"; ?></li>
-                    <?php } ?>
-                </ul>
+                <div class="alert alert-danger" role="alert">
+                    <h3>ERROR - Please correct the following...</h3>
+                    <ul>
+                        <?php foreach ($errors as $error) { ?>                    
+                            <li><?php echo $error . "<br />"; ?></li>
+                        <?php } ?>
+                    </ul>
+                </div>
             <?php } ?>
             <form action="/pets_new.php" method="POST">
                 <div class="form-group">
