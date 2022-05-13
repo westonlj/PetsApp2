@@ -10,11 +10,20 @@ if (isset($_POST['deletePet'])) {
         
     delete_pet($id);
     echo '<h1> Your pet is DEAD </h1>';
-    die;
     //header();
+} else {
+    echo '<h1> There is no pet to delete!</h1>';
 }
 
-echo 'No pet was found';
-// header to redirect
+?>
+<!-- option to create a new pet if someone reaches this page via the search bar-->
+<!-- also want to style the page more -->
+<div class="container">
+    <div class="row justify-items-center">
+        <div class="col-lg-2">
+            <h2><a class="btn btn-primary" href="/pets_new.php">Post another pet!</a></h2>
+        </div>
+    </div>
+</div>
 
-require 'layout/footer.php';
+<?php require 'layout/footer.php'; ?>
