@@ -55,7 +55,7 @@ function get_pet($id)
     $statement->bindParam('idVal', $id);
     $statement->execute();
     // we are still calling fetch (to get our data) on the pdo object when we return it
-    return $statement->fetch();
+    return $statement->fetch(PDO::FETCH_ASSOC);
 }
 // Function that saves newly added pets
 function save_pet($petToSave)
@@ -79,6 +79,27 @@ function save_pet($petToSave)
 
     $statement->execute();
 
+}
+
+function update_pet($pet)
+{
+    // blah blah logic
+    // UPDATE `pet_data`.`pets` SET `age` = '8 years' WHERE `id` = 7;
+    $pdo = get_connection();
+    $query = 
+        'UPDATE pet_data.pets 
+        SET name = :nameVal, breed = :breedVal, weight = :weightVal, information = :infoVal, age = :ageVal 
+        WHERE id = :idVal';
+    $statement = $pdo->prepare($query);
+    $statement->bindParam('nameVal', $pet['name']);
+    $statement->bindParam('breedVal', $pet['breed']);
+    $statement->bindParam('weightVal', $pet['weight']);
+    $statement->bindParam('infoVal', $pet['information']);
+    $statement->bindParam('ageVal', $pet['age']);
+    $statement->bindParam('idVal', $pet['id']);
+
+    $statement->execute();
+    
 }
 
 // TODO - DELETE_PET

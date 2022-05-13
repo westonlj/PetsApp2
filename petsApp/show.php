@@ -39,8 +39,8 @@ $pet = get_pet($id);
                     </tr>
                 </tbody>
             </table>
+            <a class="btn btn-default" href="/pets_edit.php?id=<?php echo $pet['id']; ?>">EDIT THIS PET</a>
             <form action="/pet_delete.php" method="POST">
-                <!-- <input name='petId' value='<?//php $id?>'/> -->
                 <!-- EDIT BUTTON NEXT TO DELETE BUTTON -->
                 <button type="submit" class="btn btn-danger" name="deletePet" value="<?php echo $id?>">
                     <span class="glyphicon glyphicon-remove"></span>

@@ -1,18 +1,22 @@
 <?php
 require 'lib/functions.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$errors = [];
 
-    if (isset($_POST['name'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    if (!empty($_POST['name'])) {
         $name = $_POST['name'];
     } else {
-        $name = 'A dog without a name';
+        $errors[] = 'This dog needs a name!';
+        // $name = 'A dog without a name';
     }
 
-    if (isset($_POST['breed'])) {
+    if (!empty($_POST['breed'])) {
         $breed = $_POST['breed'];
     } else {
-        $breed = '';
+        $errors[] = 'This dog needs a breed!';
+        // $breed = '';
     }
 
     if (isset($_POST['weight'])) {
@@ -33,20 +37,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $information = '';
     }
 
-    $newPet = array(
-        'name' => $name,
-        'breed' => $breed,
-        'weight' => $weight,
-        'information' => $information,
-        'age' => $age,
-        'image' => '',
-        
-    );
+    // explicit way of seeing the errors array is EMPTY
+    if (count($errors) == 0) {
 
-    save_pet($newPet);
+        $newPet = array(
+            'name' => $name,
+            'breed' => $breed,
+            'weight' => $weight,
+            'information' => $information,
+            'age' => $age,
+            'image' => '',
+        );
 
-    header('Location: /');
-    die;
+        save_pet($newPet);
+        header('Location: /');
+        die;
+    }
+    // We do have errors
+    
+    
 }
 ?>
 
@@ -56,7 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="row">
         <div class="col-xs-6">
             <h1>Add your Pet! Squirrel!</h1>
-
+            <?php if (count($errors) > 0) {?>
+                <h3>ERROR - Please correct the following...</h3>
+                <ul>
+                    <?php foreach ($errors as $error) { ?>                    
+                        <li><?php echo $error . "<br />"; ?></li>
+                    <?php } ?>
+                </ul>
+            <?php } ?>
             <form action="/pets_new.php" method="POST">
                 <div class="form-group">
                     <label for="pet-name" class="control-label">Pet Name</label>
