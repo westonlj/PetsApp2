@@ -9,13 +9,7 @@ $pet = get_pet($id);
 
 // Similar to the pets_new file we check if the button has been pressed and then run the needed functions
 // aim is to pass id to a delete pet function
-if(isset($_POST['deletePet'])) {
-    //echo $id;
-    echo 'ATTEMPTING TO DELETE';
-    die;
 
-    // TODO -> redirect to home page/ display a message "DELETED"
-}
 ?>
 
 <h1>Meet <?php echo $pet['name']; ?></h1>
@@ -29,7 +23,6 @@ if(isset($_POST['deletePet'])) {
             <p>
                 <?php echo $pet['information']; ?>
             </p>
-        <form action="/show.php?id=<?php echo $id; ?>" method="GET">
             <table class="table">
                 <tbody>
                     <tr>
@@ -46,13 +39,14 @@ if(isset($_POST['deletePet'])) {
                     </tr>
                 </tbody>
             </table>
-
-            <!-- EDIT BUTTON NEXT TO DELETE BUTTON -->
-            <button type="submit" class="btn btn-danger" name="deletePet" value="<?php $id?>">
-                <span class="glyphicon glyphicon-remove"></span>
-                    DELETE THIS FRIEND
-            </button>
-        </form>
+            <form action="/pet_delete.php" method="POST">
+                <!-- <input name='petId' value='<?//php $id?>'/> -->
+                <!-- EDIT BUTTON NEXT TO DELETE BUTTON -->
+                <button type="submit" class="btn btn-danger" name="deletePet" value="<?php echo $id?>">
+                    <span class="glyphicon glyphicon-remove"></span>
+                        DELETE THIS FRIEND
+                </button>
+            </form>
         </div>
     </div>
 </div>

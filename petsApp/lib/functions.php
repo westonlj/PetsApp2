@@ -92,5 +92,5 @@ function delete_pet($petToDelete)
     $statement = $pdo->prepare($query);
     $statement->bindParam('petToDelete', $petToDelete);
 
-    // execute() the statement
+    $statement->execute();
 }
