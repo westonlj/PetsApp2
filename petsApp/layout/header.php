@@ -9,8 +9,8 @@
 
     <title>AirPupNMeow.com: All the love, none of the crap!</title>
 
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+    <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -57,7 +57,7 @@
                         <input type="password" placeholder="Password" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-success">Sign in</button>
-                    <a href="accounts/account_create.php" class="btn btn-primary">Sign up</a>
+                    <a href="account_create.php" class="btn btn-primary">Sign up</a>
                 </form>
             </div>
             <!--/.navbar-collapse -->

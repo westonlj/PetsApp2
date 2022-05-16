@@ -35,6 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $information = '';
     }
 
+    // add an image to the local directory:
+    if (isset($_POST['image']) && count($errors) == 0) {
+        $image = $_FILES['image'];
+        var_dump($_FILES);
+        die;
+        //move_uploaded_file($image['newImage'], "/images/".$image[$name]);
+    }
+
     // explicit way of seeing the errors array is EMPTY
     if (count($errors) == 0) {
 
@@ -88,6 +96,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label for="pet-age" class="control-label">Age (Years)</label>
                     <input type="number" name="age" id="pet-age" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="pet-image" class="control-label">Upload an Image</label>
+                    <input type="file" name="image" id="pet-image"/>
                 </div>
                 <div class="form-group">
                     <label for="pet-bio" class="control-label">Pet Bio</label>

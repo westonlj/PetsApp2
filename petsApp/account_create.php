@@ -10,8 +10,12 @@
         -> async I think would allow for us to check for availability as they enter it.
 
     password -> validate password to conform to certain fields/ length.
+
+    User objects? -> easier to get the data if we can refer to an object. 
 */
 ?>
+
+<?php require 'layout/header.php'?>
 
 <div class="container">
     <div class="row">
