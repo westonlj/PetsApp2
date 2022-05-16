@@ -29,7 +29,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">AirPupNMeow</a>
+                <a class="navbar-brand" href="/">AirPupNMeow</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -57,6 +57,7 @@
                         <input type="password" placeholder="Password" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-success">Sign in</button>
+                    <a href="accounts/account_create.php" class="btn btn-primary">Sign up</a>
                 </form>
             </div>
             <!--/.navbar-collapse -->
